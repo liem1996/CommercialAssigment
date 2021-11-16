@@ -37,6 +37,7 @@ CurrentDay = today.getDay() + 1;
 var CurrentDate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
 var time = today.getHours();
 
+
 function checkCommercial(CurrentDate) {
 
     // calculating the advertising date for each adevrtaisment

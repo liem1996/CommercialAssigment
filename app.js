@@ -41,7 +41,7 @@ function checkCommercial(CurrentDate) {
 
     // calculating the advertising date for each adevrtaisment
     //if ((check("01/01/2021", "31/12/2021", CurrentDate) && (CurrentDay == 2 || CurrentDay == 3 || CurrentDay == 4) && time >= 6 && time < 16)) {
-    if ((check(01/01/2021, 31/12/2021, CurrentDate) && (CurrentDay == 2 || CurrentDay == 4) && time()>=6 && time <12)) {
+    if ((check("01/01/2021", "31/12/2021", CurrentDate) && (CurrentDay == 2 || CurrentDay == 4) && time>=6 && time <12)) {
             setTimeout(function () {
             messages[0].text.innerHTML = "On sale 90% discount"+ "<br/>" +"ONLY TODAY!!!! "+ "<br/>"+ "Sweet donuts :) "+ "<br/>"+ "Come and get it ";
             messages[0].image1.src = "https://www.roladin.co.il/wp-content/uploads/2020/11/%E2%95%AB%C2%BA%E2%95%AB%D7%A5%E2%95%AB%C2%BA%E2%95%AB%D7%A9-%E2%95%AB%C2%BA%E2%95%AB%C2%BF%E2%95%AB%D7%A9%E2%95%AB%C2%A5.jpg";

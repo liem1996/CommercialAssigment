@@ -15,7 +15,6 @@ function Message12(messageName, text, image1, image2) {
 
 
 // The message object
-
 var message1 = new Message12("message1", document.getElementById("text1"), document.getElementById("image1"), document.getElementById("image2"));
 var message2 = new Message12("message2", document.getElementById("text1"), document.getElementById("image1"), document.getElementById("image2"));
 var message3 = new Message12("message3", document.getElementById("text1"), document.getElementById("image1"), document.getElementById("image2"));
@@ -57,7 +56,7 @@ function checkCommercial(CurrentDate) {
             + "Hot and tasty pizza :) "+"<br/>" + "say cheese "+ "<br/>"
             + "to the new "+ "<br/>"+ "pizza in our menu "+ "<br/>"
             + "with an extra topping "+ "<br/>"+ "and souces "+ "<br/>"
-            + "kosher pizza "+ "<br/>"+ "Come and get it !!!"+ "<br/>";
+            + "kosher pizza "+ "<br/>"+ "Come and get it!!!"+ "<br/>";
             messages[1].image1.src = "https://medias.timeout.co.il/www/uploads/2020/03/%D7%A4%D7%99%D7%A6%D7%94%D7%A9%D7%99%D7%A7%D7%90%D7%92%D7%95_optimized-1140x641.jpg";
             messages[1].image2.src = "";
 
@@ -74,7 +73,7 @@ function checkCommercial(CurrentDate) {
     }
     if (check("29/03/2021", "15/04/ 2021", CurrentDate) && (CurrentDay == 2) && time >= 15 && time < 19) {
         setTimeout(function () {
-            messages[3].text.innerHTML = "If you drink dont drive!!! "+ "<br/>" +"Save your life and others"+ "<br/>";
+            messages[3].text.innerHTML = "If you drink don't drive!!! "+ "<br/>" +"Save your life and others"+ "<br/>";
             messages[3].image1.src = "";
             messages[3].image2.src = "";
 

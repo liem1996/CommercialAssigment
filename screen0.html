@@ -1,62 +1,32 @@
+<!DOCTYPE html>
 
 <html lang="en" dir="ltr">
+
+<head>
+
   <style>
-    #result{
-        height: 100%;
-        width: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+    #result {
+      height: 100%;
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-    </style>
+  </style>
+<title>Haim</title>
+
+
+</head>
 
 <body>
   <div id="text3">
-    <img id="result" src="https://dezignzoom.co.il/wp-content/uploads/2014/06/white-rectangle-above-sidebar.jpg">
+    <img id="result">
   </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-<script>
- 
-var image = document.getElementById("result");
-var i=0;
-function func(){
-    i++;  
-    
-    image.src=jasonArray[i % jasonArray.length].image;
+    <script type="text/javascript" src="script/screen0Script.js" charset="utf-8"></script>
 
-}
-
- jasonArray = [
-    {
-       
-        opentime: 2000,
-        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8f8PY_WSeMxTbcTyAmel0fzUo0wCs_HykrQ&usqp=CAU"
-       
-    },
-    {
-        
-        opentime: 3000,
-        image:"https://static.wixstatic.com/media/9aa509_4d6b69af038e47269d1e39735987c6ed~mv2.jpg/v1/fill/w_250,h_363,al_c,q_90/9aa509_4d6b69af038e47269d1e39735987c6ed~mv2.jpg"
-    },            
-    {
-        
-        opentime: 6000,
-        image:"https://o.quizlet.com/DkJ6OEEA6nkfdZsb7CEOiw.jpg"
-    },           
-     
-];
-
-  setInterval(func, jasonArray[i % jasonArray.length].opentime);
-
-
-
-  i=0;
-
-
-
-
-</script>
 </body>
 
 </html>

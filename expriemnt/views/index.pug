@@ -1,0 +1,30 @@
+docotype  
+html 
+    head 
+        title knowledegebase
+   
+    body
+        input(type = 'hidden', id = 'active1', value = screen)    
+        img(src="" id="image")
+
+
+    script.
+           var naeo= document.getElementById('image');
+            
+            var i=0
+            var currentuser = document.getElementById("active1").value;
+
+             var current;
+            current = JSON.parse(currentuser);
+
+             function func(){
+                 i++;  
+               // var currentuser = !{JSON.stringify(screen)};
+               
+                console.log(current);
+                
+                naeo.src = current[i].image;
+              }
+    
+            //console.log(opentime);
+            setInterval(func,current[i].opentime);    

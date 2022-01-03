@@ -3,7 +3,7 @@ var app = express();
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'CommercialssLiem12'
+const databaseName = 'Commercials'
 
 const path = require('path');
 
@@ -14,7 +14,11 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
     if (error){
         return console.log("Can't connect to db")
     }
-     db = client.db(databaseName);
+
+    db = client.db(databaseName);
+
+    db.dropDatabase();
+
     db.collection('commercialsAdds').insertMany(
        [
         {
@@ -85,5 +89,6 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
        }
    })
      console.log("done entering to DB");
+
 
 })

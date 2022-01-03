@@ -4,7 +4,7 @@ var port=8089;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'CommercialssLiem12'
+const databaseName = 'Commercials'
 const databasecomm = 'commercialsAdds'
 const databasecommUsers = 'commercialsUsers'
 var http = require( 'http' ).createServer(app);
@@ -22,11 +22,12 @@ var temp =[];
 let screen=0;
 
 MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
+
     if (error){
         return console.log("Can't connect to db")
     }
      db = client.db(databaseName);
-
+     
       db.collection(databasecomm).find().toArray((error,tasks)=>{
       temp = tasks})
 

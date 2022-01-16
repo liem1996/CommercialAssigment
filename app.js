@@ -2,7 +2,7 @@ var express = require("express");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 var app = express();
-var port=8089;
+var port=8080;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -12,6 +12,7 @@ const databasecommUsers = 'commercialsUsers'
 var http = require( 'http' ).createServer(app);
 var io = require( 'socket.io' )( http );
 var bodyParser = require('body-parser')
+var user;
  
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());   
@@ -55,6 +56,12 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
         screen3=task3;
 })
 
+  db.collection("commercialsAdmin").findOne({
+      
+  }, (error,task) => {
+  user=task;
+  })
+
 
 app.get('/screen=:screen', (req, res) => {
   screen = req.params.screen ;
@@ -76,22 +83,23 @@ app.get('/admin',function(req,res){
 
 
 
-
 app.post('/login', function(sReq, sRes) {
   var username = sReq.body.username;
   var password = sReq.body.password;
-  console.log(password);
-  if (username=='amitbasat124@gmail.com' && password == '123456') {
+    
+  if (username==user.username && password == user.password) {
          // do something here with a valid login
-         sRes.render('admin',{
-          
-        });
+
+         sRes.sendFile(path.join(__dirname+'/editAdmin.html'));
 
   } else { 
          // user or password doesn't match
-         
+         sRes.json("Wrong details, please go back to the firsg page!");
   }
 });
+
+
+
 
 http.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
@@ -152,9 +160,3 @@ function UserConnect(num, b)
   db.collection(databasecommUsers).updateOne(myquery, newvalues, function(err, res) {
   } ) ;
 }
-
-  
-
-
-
-

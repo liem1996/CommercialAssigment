@@ -3,9 +3,10 @@ var app = express();
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'Commercials'
+const databaseName = 'Commercials12'
 
 const path = require('path');
+const { getMaxListeners } = require("process");
 
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','pug');
@@ -88,6 +89,20 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
            return console.log('Could not insert')
        }
    })
+
+   db.collection('commercialsAdmin').insertMany(
+    [
+     {
+      username:"amitbasat2212@gmail.com",
+      password:12345678
+
+     },
+]
+ , (error,result) => {
+     if (error){
+         return console.log('Could not insert')
+     }
+ })
      console.log("done entering to DB");
 
 

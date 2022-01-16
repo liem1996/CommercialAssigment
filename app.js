@@ -1,15 +1,20 @@
 var express = require("express");
+const req = require("express/lib/request");
+const res = require("express/lib/response");
 var app = express();
 var port=8089;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'Commercials'
+const databaseName = 'Commercials12'
 const databasecomm = 'commercialsAdds'
 const databasecommUsers = 'commercialsUsers'
 var http = require( 'http' ).createServer(app);
 var io = require( 'socket.io' )( http );
-
+var bodyParser = require('body-parser')
+ 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());   
 
 const path = require('path');
 
@@ -20,6 +25,7 @@ let db=0;
  
 var temp =[];
 let screen=0;
+var admin;
 
 MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
 
@@ -52,6 +58,7 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
 
 app.get('/screen=:screen', (req, res) => {
   screen = req.params.screen ;
+
   
     res.render('index',{
       screen:temp,
@@ -61,12 +68,41 @@ app.get('/screen=:screen', (req, res) => {
 });
 
 
+
+app.get('/admin',function(req,res){
+  res.sendFile(path.join(__dirname+'/index5.html'));
+ 
+});
+
+
+
+
+app.post('/login', function(sReq, sRes) {
+  var username = sReq.body.username;
+  var password = sReq.body.password;
+  console.log(password);
+  if (username=='amitbasat124@gmail.com' && password == '123456') {
+         // do something here with a valid login
+         sRes.render('admin',{
+          
+        });
+
+  } else { 
+         // user or password doesn't match
+         
+  }
+});
+
 http.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
 
 });
 
+
+
 io.on( 'connection', function( socket ) {
+ 
+  
   console.log( "a user has connected!" );
   if (screen == 1)
   {

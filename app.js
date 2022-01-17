@@ -13,7 +13,7 @@ var http = require( 'http' ).createServer(app);
 var io = require( 'socket.io' )( http );
 var bodyParser = require('body-parser')
 var user;
-var countUsers=0;
+var countUsers=1;
  
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());   
@@ -68,6 +68,7 @@ app.get('/screen=:screen', (req, res) => {
   screen = req.params.screen ;
     res.render('index',{
       screen:temp,
+      
   });
   
   
@@ -80,6 +81,11 @@ app.get('/admin',function(req,res){
  
 });
 
+app.post("/editcoom",function(sReq, sRes){
+   
+
+});
+
 
 
 app.post('/login', function(sReq, sRes) {
@@ -90,10 +96,10 @@ app.post('/login', function(sReq, sRes) {
          // do something here with a valid login
 
          sRes.render('admin',{
-          screen:temp,
-          
-
+          screen:temp, usersconnect:countUsers,
          });
+          
+         
 
   } else { 
          // user or password doesn't match

@@ -5,32 +5,45 @@ html
 
 body
     h1 "commircials"
-    form(action="/editcoom" method="POST")
-   
-      input(type = 'hidden', name="comm" id ="comm" placeholder="" value=screen)
-    p 0:
-      input(type="text" id="0" placeholder="")
-    p 1:
-      input(type="text" id="1" placeholder="")
-    p 2:
-      input(type="text" id="2" placeholder="")
-    p 3:
-      input(type="text" id="3" placeholder="")
-    p 4:
-      input(type="text" id="4" placeholder="")
-    p 5:
-      input(type="text" id="5" placeholder="")
-    p 6:
-      input(type="text" id="6" placeholder="")
-    p 7:
-      input(type="text" id="7" placeholder="")
-    p 8:
-      input(type="text" id="8" placeholder="")      
-    button(type="submit")
+    form(id ="form" action="/editcoom" method="post")
+        input(type = 'hidden', name="comm" id ="comm" placeholder="" value=screen)
+        p 0:
+        input(name ="0" type="text" id="0" placeholder="")
+        input(name ="9" type="text" id="9" placeholder="")
+        p 1:
+        input(name ="1" type="text" id="1" placeholder="")
+        input(name ="10" type="text" id="10" placeholder="")    
+        p 2:
+        input(name ="2" type="text" id="2" placeholder="")
+        input(name ="11" type="text" id="11" placeholder="")
+        p 3:
+        input(name ="3" type="text" id="3" placeholder="")
+        input(name ="12" type="text" id="12" placeholder="")
+        p 4:
+        input(name ="4" type="text" id="4" placeholder="")
+        input(name ="13" type="text" id="13" placeholder="")
+        p 5:
+        input(name ="5" type="text" id="5" placeholder="")
+        input(name ="14" type="text" id="14" placeholder="")
+        p 6:
+        input(name ="6" type="text" id="6" placeholder="")
+        input(name ="15" type="text" id="15" placeholder="")
+        p 7:
+        input(name ="7" type="text" id="7" placeholder="")
+        input(name ="16" type="text" id="16" placeholder="")
+        p 8:
+        input(name ="8" type="text" id="8" placeholder="")
+        input(name ="17" type="text" id="17" placeholder="")
+        p Number of connected users:
+        input(name="userscount" id ="userscount" value=usersconnect disabled )              
+       
+        input(type='submit', value='Submit')
+
     script(src="/socket.io/socket.io.js")
     script.
            var socket = io();  
             var naeo1;
+            var naeo2;
            
             var counter=0;
             var currentuser = document.getElementById("comm").value;
@@ -39,11 +52,10 @@ body
            
             for(var i=0;i<current.length;i++){
                 var numid=i.toString();
+                var numtime = (i+9).toString();
                 console.log(numid); 
-                naeo1=document.getElementById(numid);        
+                naeo2=document.getElementById(numtime);
+                naeo1=document.getElementById(numid);
+                naeo2.value =current[i].opentime;  
                 naeo1.value = current[i].image;
-            }           
-            console.log(current[0].image)
-            //naeo1=document.getElementById("1");        
-            //naeo1.value = current[0].image;
-           
+            }

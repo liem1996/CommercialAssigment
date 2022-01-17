@@ -2,7 +2,7 @@ var express = require("express");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 var app = express();
-var port=8080;
+var port=8089;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -13,6 +13,7 @@ var http = require( 'http' ).createServer(app);
 var io = require( 'socket.io' )( http );
 var bodyParser = require('body-parser')
 var user;
+var countUsers=0;
  
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());   
@@ -65,8 +66,6 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
 
 app.get('/screen=:screen', (req, res) => {
   screen = req.params.screen ;
-
-  
     res.render('index',{
       screen:temp,
   });
@@ -86,11 +85,15 @@ app.get('/admin',function(req,res){
 app.post('/login', function(sReq, sRes) {
   var username = sReq.body.username;
   var password = sReq.body.password;
-    
+      
   if (username==user.username && password == user.password) {
          // do something here with a valid login
 
-         sRes.sendFile(path.join(__dirname+'/editAdmin.html'));
+         sRes.render('admin',{
+          screen:temp,
+          
+
+         });
 
   } else { 
          // user or password doesn't match
@@ -109,8 +112,7 @@ http.listen(port, () => {
 
 
 io.on( 'connection', function( socket ) {
- 
-  
+  countUsers++; 
   console.log( "a user has connected!" );
   if (screen == 1)
   {
@@ -129,6 +131,9 @@ io.on( 'connection', function( socket ) {
   }
   
   socket.on( 'disconnect', function() {
+    if(countUsers!=0){
+       countUsers--;
+    }
     if (screen == 1)
     {
       UserConnect(1, false);

@@ -29,6 +29,8 @@ var temp =[];
 let screen=0;
 var admin;
 
+
+var idArray= ["0","1","2","3","4","5","6","7","8"];
 MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
 
     if (error){
@@ -82,10 +84,37 @@ app.get('/admin',function(req,res){
 });
 
 app.post("/editcoom",function(sReq, sRes){
-   
+  
+  console.log("temp: "+temp);
+
+    changeCom(temp[0]._id , sReq.body.com0 ,sReq.body.com9);
+    changeCom(temp[1]._id , sReq.body.com1 ,sReq.body.com10);
+    changeCom(temp[2]._id , sReq.body.com2 ,sReq.body.com11);
+    changeCom(temp[3]._id , sReq.body.com3 ,sReq.body.com12);
+    changeCom(temp[4]._id , sReq.body.com4 ,sReq.body.com13);
+    changeCom(temp[5]._id , sReq.body.com5 ,sReq.body.com14);
+    changeCom(temp[6]._id , sReq.body.com6 ,sReq.body.com15);
+    changeCom(temp[7]._id , sReq.body.com7 ,sReq.body.com16);
+    changeCom(temp[8]._id , sReq.body.com8 ,sReq.body.com17);
+
+
+    
 
 });
 
+
+function changeCom(id,img, openT){
+console.log(id + img + openT);
+
+db.collection(databasecomm).update({_id:mongodb.ObjectID(id)}, 
+{$set: {opentime: openT,image: img
+}});
+
+
+
+console.log("temp "+temp);
+
+}
 
 
 app.post('/login', function(sReq, sRes) {

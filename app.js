@@ -2,7 +2,7 @@ var express = require("express");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 var app = express();
-var port = 8082;
+var port = 8089;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -19,6 +19,7 @@ var screen1State = " ", screen2State = " ", screen3State = " ";
 var flag = 0;
 var username;
 var password;
+var myId, myName, opentime, image;
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
@@ -113,6 +114,8 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     changeCom(temp[8]._id, sReq.body.com8, sReq.body.com17);
 
     changeAdmin(admin[0]._id, username, password);
+
+    addCom(sReq.body.myId ,sReq.body.myName ,sReq.body.opentime, sReq.body.image);
   });
 
 
@@ -130,6 +133,22 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     //console.log("temp " + temp);
 
+  }
+
+  function addCom(id,name,openT,img){
+    console.log(id + name + openT + img);
+  
+  
+    db.collection(databasecomm).insertMany(
+      [
+       {
+         myId : id,
+         myName: name,
+         opentime: openT,
+         image:img
+       },
+      ]
+    )
   }
 
   function changeCom(id, img, openT) {
@@ -158,7 +177,8 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
       sRes.render('admin', {
         screen: temp, usersconnect: countUsers, screen1: screen1State, screen2: screen2State,
-        screen3: screen3State, adminName: username, adminPassword: password
+        screen3: screen3State, adminName: username, adminPassword: password,
+        myId1:myId, myName1:myName, opentime1:opentime, image1:image,
       });
 
 
@@ -184,16 +204,16 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     console.log("a user has connected!");
     if (screen == 0) {
       UserConnect(0, true);
-      screen1State = "Screen 1 is connected"
+      screen1State = "Screen 0 is connected"
     }
 
     if (screen == 1) {
       UserConnect(1, true);
-      screen2State = "Screen 2 is connected"
+      screen2State = "Screen 1 is connected"
     }
     if (screen == 2) {
       UserConnect(2, true);
-      screen3State = "Screen 3 is connected"
+      screen3State = "Screen 2 is connected"
 
     }
 
@@ -203,16 +223,16 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
       }
       if (screen == 0) {
         UserConnect(0, false);
-        screen1State = "Screen 1 is disconnected"
+        screen1State = "Screen 0 is disconnected"
       }
       if (screen == 1) {
         UserConnect(1, false);
-        screen2State = "Screen 2 is disconnected"
+        screen2State = "Screen 1 is disconnected"
 
       }
       if (screen == 2) {
         UserConnect(2, false);
-        screen3State = "Screen 3 is disconnected"
+        screen3State = "Screen 2 is disconnected"
 
       }
 

@@ -6,7 +6,7 @@ var port=8082;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'Commercials12'
+const databaseName = 'Commercials13'
 const databasecomm = 'commercialsAdds'
 const databasecommUsers = 'commercialsUsers'
 var http = require( 'http' ).createServer(app);
@@ -145,23 +145,23 @@ http.listen(port, () => {
 
 
 
-io.on( 'connection', function( socket ) {
+io.on( 'connection', function(socket) {
   countUsers++; 
   console.log( "a user has connected!" );
-  if (screen == 1)
+  if (screen == 0)
   {
-    UserConnect(1, true);
+    UserConnect(0, true);
     screen1State = "Screen 1 is connected"
    }
 
+  if (screen == 1)
+  {
+    UserConnect(1, true);
+    screen2State = "Screen 2 is connected"
+  }
   if (screen == 2)
   {
     UserConnect(2, true);
-    screen2State = "Screen 2 is connected"
-  }
-  if (screen == 3)
-  {
-    UserConnect(3, true);
     screen3State = "Screen 3 is connected"
 
   }
@@ -170,20 +170,20 @@ io.on( 'connection', function( socket ) {
     if(countUsers!=0){
        countUsers--;
     }
-    if (screen == 1)
+    if (screen == 0)
     {
-      UserConnect(1, false);
+      UserConnect(0, false);
       screen1State = "Screen 1 is disconnected"
     }
-    if (screen == 2)
+    if (screen == 1)
     {
-     UserConnect(2, false);
+     UserConnect(1, false);
      screen2State = "Screen 2 is disconnected"
 
     }
-    if (screen == 3)
+    if (screen == 2)
     {
-      UserConnect(3, false);
+      UserConnect(2, false);
       screen3State = "Screen 3 is disconnected"
 
     }
@@ -198,8 +198,7 @@ io.on( 'connection', function( socket ) {
 
 function UserConnect(num, b)
 {
-  
-  var myquery = { Screen: num };
+  var myquery = { Screen:num };
   var newvalues = { $set: { isConnected: b } };
   db.collection(databasecommUsers).updateOne(myquery, newvalues, function(err, res) {
   } ) ;

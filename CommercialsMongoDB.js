@@ -3,7 +3,7 @@ var app = express();
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'Commercials12'
+const databaseName = 'Commercials13'
 
 const path = require('path');
 const { getMaxListeners } = require("process");
@@ -91,15 +91,15 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
       [
        {
         isConnected: false,
-        Screen: 1
+        Screen: 0
         },
        {
         isConnected: false,
-        Screen: 2    
+        Screen: 1    
          },
        {
         isConnected: false,
-        Screen: 3
+        Screen: 2
        },
 ]
    , (error,result) => {

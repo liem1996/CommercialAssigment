@@ -2,7 +2,7 @@ var express = require("express");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 var app = express();
-var port=8089;
+var port=8082;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -14,6 +14,8 @@ var io = require( 'socket.io' )( http );
 var bodyParser = require('body-parser')
 var user;
 var countUsers=1;
+var screen1State =" ", screen2State=" ", screen3State=" ";
+var flag =0;
  
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());   
@@ -96,10 +98,6 @@ app.post("/editcoom",function(sReq, sRes){
     changeCom(temp[6]._id , sReq.body.com6 ,sReq.body.com15);
     changeCom(temp[7]._id , sReq.body.com7 ,sReq.body.com16);
     changeCom(temp[8]._id , sReq.body.com8 ,sReq.body.com17);
-
-
-    
-
 });
 
 
@@ -123,9 +121,10 @@ app.post('/login', function(sReq, sRes) {
       
   if (username==user.username && password == user.password) {
          // do something here with a valid login
-
+        
          sRes.render('admin',{
-          screen:temp, usersconnect:countUsers,
+          screen:temp, usersconnect:countUsers, screen1:screen1State, screen2:screen2State,
+           screen3:screen3State,
          });
           
          
@@ -152,16 +151,18 @@ io.on( 'connection', function( socket ) {
   if (screen == 1)
   {
     UserConnect(1, true);
+    screen1State = "Screen 1 is connected"
    }
 
   if (screen == 2)
   {
     UserConnect(2, true);
-
+    screen2State = "Screen 2 is connected"
   }
   if (screen == 3)
   {
     UserConnect(3, true);
+    screen3State = "Screen 3 is connected"
 
   }
   
@@ -172,15 +173,18 @@ io.on( 'connection', function( socket ) {
     if (screen == 1)
     {
       UserConnect(1, false);
+      screen1State = "Screen 1 is disconnected"
     }
     if (screen == 2)
     {
      UserConnect(2, false);
+     screen2State = "Screen 2 is disconnected"
 
     }
     if (screen == 3)
     {
       UserConnect(3, false);
+      screen3State = "Screen 3 is disconnected"
 
     }
 

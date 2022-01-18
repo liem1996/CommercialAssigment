@@ -1,10 +1,10 @@
 docotype  
 html 
     head 
-        title Commercials
+        title CommercialsAdmin
 
 body
-    h1 "commircials"
+    h1 "Commercials"
     form(id ="form" action="/editcoom" method="post")
         input(type = 'hidden', name="comm" id ="comm" placeholder="" value=screen)
         p 0:
@@ -35,13 +35,20 @@ body
         input(name ="com8" type="text" id="8" placeholder="")
         input(name ="com17" type="text" id="17" placeholder="")
         p Number of connected users:
-        input(name="userscount" id ="userscount" value=usersconnect disabled )              
+        input(name="userscount" id ="userscount" value=usersconnect disabled )   
+        p Admin is connected
+        p Screen 1:
+        input(name="screen1" id ="screen1" value=screen1 disabled )    
+        p Screen 2:
+        input(name="screen2" id ="screen2" value=screen2 disabled ) 
+        p Screen 3:
+        input(name="screen3" id ="screen3" value=screen3 disabled )           
        
         input(type='submit', value='Submit')
 
-    script(src="/socket.io/socket.io.js")
+    
     script.
-           var socket = io();  
+            
             var naeo1;
             var naeo2;
            

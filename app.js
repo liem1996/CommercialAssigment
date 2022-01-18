@@ -2,7 +2,7 @@ var express = require("express");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 var app = express();
-var port = 8089;
+var port = 8082;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -96,22 +96,27 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   app.post("/editcoom", function (sReq, sRes) {
 
+    db.collection(databasecomm).find().toArray((error, tasks) => {
+      temp = tasks
+    })
+
     username = sReq.body.adminName;
     password = sReq.body.adminPassword;
     console.log("adminName: " + username);
     console.log("adminPassword: " + password);
 
+    flag = temp.length;
+    var num, num2;
     //console.log("temp: " + temp);
+    for (var i =0; i<temp.length; i++)
+  {
+    var comVar = "com";
+    num = sReq.body[comVar +i];
+    num2 = sReq.body[comVar +flag];
 
-    changeCom(temp[0]._id, sReq.body.com0, sReq.body.com9);
-    changeCom(temp[1]._id, sReq.body.com1, sReq.body.com10);
-    changeCom(temp[2]._id, sReq.body.com2, sReq.body.com11);
-    changeCom(temp[3]._id, sReq.body.com3, sReq.body.com12);
-    changeCom(temp[4]._id, sReq.body.com4, sReq.body.com13);
-    changeCom(temp[5]._id, sReq.body.com5, sReq.body.com14);
-    changeCom(temp[6]._id, sReq.body.com6, sReq.body.com15);
-    changeCom(temp[7]._id, sReq.body.com7, sReq.body.com16);
-    changeCom(temp[8]._id, sReq.body.com8, sReq.body.com17);
+    changeCom(temp[i]._id, num2, num);
+    flag++;
+  }
 
     changeAdmin(admin[0]._id, username, password);
 
@@ -128,10 +133,6 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
           username: name, password: pass
         }
       });
-
-
-
-    //console.log("temp " + temp);
 
   }
 
@@ -151,7 +152,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     )
   }
 
-  function changeCom(id, img, openT) {
+function changeCom(id, img, openT) {
     console.log(id + img + openT);
 
     db.collection(databasecomm).update({ _id: mongodb.ObjectID(id) },
@@ -160,12 +161,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
           opentime: openT, image: img
         }
       });
-
-
-
-    console.log("temp " + temp);
-
-  }
+    }
 
 
   app.post('/login', function (sReq, sRes) {

@@ -47,7 +47,7 @@ body
            
             for (var i=0;i<current.length;i++){
                 // Append a node with a random text
-                
+                console.log("the current length:" + current.length);
                 container.appendChild(document.createTextNode("com" + (i)));
                 container.appendChild(document.createTextNode("com" + (counterCom)));
                 // Create an <input> element, set its type and name attributes
@@ -62,7 +62,6 @@ body
                 input2.type = "text";
                 input2.name = "com"+ (counterCom);
                 container.appendChild(input);
-               
                 container.appendChild(input2);
                 naeo2=document.getElementById("com"+(i));
                 naeo1=document.getElementById("com"+(counterCom));

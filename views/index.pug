@@ -26,9 +26,9 @@ html
             
             current = JSON.parse(currentuser);
 
-            i[0] = Math.floor(Math.random() * (current.length-1 - 6 + 1) + 6);
-            i[1] =Math.floor(Math.random() * (current.length-4 - 3 + 1) + 3);
-            i[2] =Math.floor(Math.random() * (current.length-7 - 0 + 1) + 0);
+            i[0] = Math.floor(Math.random() * current.length);
+            i[1] = Math.floor(Math.random() * current.length);
+            i[2] = Math.floor(Math.random() * current.length);
 
              function func(){
                 if (counter==3){

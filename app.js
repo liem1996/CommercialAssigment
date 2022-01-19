@@ -2,7 +2,7 @@ var express = require("express");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 var app = express();
-var port = 8082;
+var port = 8089;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -19,8 +19,8 @@ var screen1State = " ", screen2State = " ", screen3State = " ";
 var flag = 0, flag2 = 0;
 var username;
 var password;
+const ObjectID = require('mongodb').ObjectID;
 var myId, myName, opentime, image;
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
@@ -92,12 +92,14 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   });
 
+
+  
+
   app.post("/editcoom", function (sReq, sRes) {
 
     username = sReq.body.adminName;
     password = sReq.body.adminPassword;
-    console.log("adminName: " + username);
-    console.log("adminPassword: " + password);
+   
 
     flag = temp.length;
     var num, num2, num3, var1, var2, var3, var4;
@@ -114,16 +116,22 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     num2 = sReq.body[comVar +flag];
     num3 = sReq.body[comDel + i];
   
-    changeCom(temp[i]._id, num2, num);
-    if (var1 != ""&&var2!=""&&var3!=""&&var4!="")
+    changeCom(temp[i]._id, num2, num,i);
+    if (var1!= "" && var2!=""&&var3!=""&&var4!="")
     {
      addCom(var1,var2,var3,var4);
      var1="";
      var2="";
      var3="";
      var4="";
+     db.collection(databasecomm).find().toArray((error, tasks) => {
+      temp = tasks
+      })
     }
     
+    
+    var list =[]
+
     if (num3)
     {
       deleteCom(temp[i]._id);
@@ -134,15 +142,23 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     flag++;
   }
 
-    changeAdmin(admin[0]._id, username, password);
+  console.log(temp);
 
+    changeAdmin(admin[0]._id, username, password);
+    
     db.collection(databasecomm).find().toArray((error, tasks) => {
       temp = tasks
     })
-    sRes.render('admin', {
-      screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
-      screen2: screen3State, adminName: username, adminPassword: password,
-    });
+
+
+    
+    setTimeout(() => {
+      sRes.render('admin', {
+        screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
+        screen2: screen3State, adminName: username, adminPassword: password,
+      });
+    }, 2000);
+   
 
     });
 
@@ -152,7 +168,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   db.collection(databasecomm).deleteOne({
     _id: id
   }).then((result) => {
-    console.log(result)
+    
   }).catch((error) => {
     console.log(error)
     
@@ -160,21 +176,19 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 }
 
   function changeAdmin(id, name, pass) {
-    console.log(id + name + pass);
+   
 
-    db.collection(databaseAdmin).update({ _id: mongodb.ObjectID(id) },
+    db.collection(databaseAdmin).updateMany({ _id: mongodb.ObjectID(id) },
       {
         $set: {
           username: name, password: pass
         }
       });
-
+     
   }
 
   function addCom(id,name,openT,img){
-    console.log(id + name + openT + img);
-  
-  
+      
     db.collection(databasecomm).insertMany(
       [
        {
@@ -185,22 +199,23 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
        },
       ]
     )
-    db.collection(databasecomm).find().toArray((error, tasks) => {
-      temp = tasks
-    })
+
+       
   }
 
-function changeCom(id, img, openT) {
-    console.log(id + img + openT);
-
-    db.collection(databasecomm).update({ _id: mongodb.ObjectID(id) },
+function changeCom(id, img, openT,index) {
+  
+  db.collection(databasecomm).updateMany({ _id: mongodb.ObjectID(id) },
       {
         $set: {
           opentime: openT, image: img
         }
-      });
+        
+      }
+      );
+      
 
-    }
+  }
 
 
   app.post('/submit',function (sReq, sRes){

@@ -5,7 +5,7 @@ html
 body
     h1 "Commercials"
     form(id ="form" action="/editcoom" method="post")
-        input(type = 'hidden', name="comm" id ="comm" placeholder="" value=screen)
+        input(type = 'hidden', name="comm" id ="com" placeholder="" value=screen)
         p Number of connected users:
         input(name="userscount" id ="userscount" value=usersconnect disabled )
             
@@ -34,7 +34,7 @@ body
             var naeo2;           
             var counter1=2;
            
-            var currentuser = document.getElementById("comm").value;
+            var currentuser = document.getElementById("com").value;
             var current;  
             current = JSON.parse(currentuser);  
              var counterCom=current.length;
@@ -44,8 +44,7 @@ body
 
             for (var i=0;i<current.length;i++){
                 // Append a node with a random text
-
-                console.log("the current length:" + current.length);
+                
                 container.appendChild(document.createTextNode("com" + (i)));
                 container.appendChild(document.createTextNode("com" + (counterCom)));
                 // Create an <input> element, set its type and name attributes
@@ -73,6 +72,9 @@ body
                 container.appendChild(label);
                 naeo2=document.getElementById("com"+(i));
                 naeo1=document.getElementById("com"+(counterCom));
+                console.log(current[i]);
+                console.log(i);
+                console.log(current[i].opentime);
                 naeo2.value =current[i].opentime;  
                 naeo1.value = current[i].image;
                 // Append a line break 

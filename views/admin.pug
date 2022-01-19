@@ -2,7 +2,6 @@ docotype
 html 
     head 
         title CommercialsAdmin
-
 body
     h1 "Commercials"
     form(id ="form" action="/editcoom" method="post")
@@ -11,17 +10,16 @@ body
         input(name="userscount" id ="userscount" value=usersconnect disabled )
             
         p Admin is connected
+        p Screen 0:
+        input(name="screen0" id ="screen0" value=screen0 disabled )    
         p Screen 1:
-        input(name="screen1" id ="screen1" value=screen1 disabled )    
+        input(name="screen1" id ="screen1" value=screen1 disabled ) 
         p Screen 2:
-        input(name="screen2" id ="screen2" value=screen2 disabled ) 
-        p Screen 3:
-        input(name="screen3" id ="screen3" value=screen3 disabled )   
+        input(name="screen2" id ="screen2" value=screen2 disabled )   
         p Admin name:
         input(name ="adminName" type="text" id="admin1" placeholder="" value=adminName)
         p Admin password:
         input(name ="adminPassword" type="text" id="admin2" placeholder="" value=adminPassword) 
-
         p Add a commercial
         input(name ="myId" type="text" id="myId" value=myId1 placeholder="Add id")
         input(name ="myName" type="text" id="myName" value=myName1 placeholder="Add name")
@@ -29,13 +27,11 @@ body
         input(name ="image" type="text" id="image" value=image1 placeholder="Add image")       
           
         input(type='submit', value='Submit')
-
     
     script.
             
             var naeo1;
-            var naeo2;  
-            var naeo3;         
+            var naeo2;           
             var counter1=2;
            
             var currentuser = document.getElementById("comm").value;
@@ -45,38 +41,42 @@ body
             // Container <div> where dynamic content will be placed
             var container = document.getElementById("form");
             // Clear previous contents of the container
-           
+
             for (var i=0;i<current.length;i++){
                 // Append a node with a random text
-                var form = document.createElement("form");
-                form.setAttribute("method", "post");
-                form.setAttribute("action", "/submit");
+
                 console.log("the current length:" + current.length);
+                container.appendChild(document.createTextNode("com" + (i)));
+                container.appendChild(document.createTextNode("com" + (counterCom)));
                 // Create an <input> element, set its type and name attributes
                 var input = document.createElement("input");
                 var input2 = document.createElement("input");
+                var checkbox = document.createElement('input');
+                console.log(input2);
                 input.type = "text";
                 input.name = "com"+ i;
+                checkbox.type = "checkbox";
+                checkbox.id = "delete" + i ;
+                checkbox.name = "delete" + i;
+                checkbox.value = "delete" + i ;
+                var label = document.createElement('label')
+                label.htmlFor = 'delete';
+                label.appendChild(document.createTextNode('delete'));
                 input.setAttribute("id", "com" + (i))
                 input2.setAttribute("id", "com" + (counterCom))
+                console.log(input2);
                 input2.type = "text";
                 input2.name = "com"+ (counterCom);
-                var s = document.createElement("input");
-                s.setAttribute("type", "submit");
-                s.setAttribute("value", "Delete");
-                form.appendChild(input);
-                form.appendChild(input2);
-               // form.appendChild(br.cloneNode());
-                form.appendChild(s);
-                container.appendChild(form);
+                container.appendChild(input);
+                container.appendChild(input2);
+                container.appendChild(checkbox);
+                container.appendChild(label);
                 naeo2=document.getElementById("com"+(i));
                 naeo1=document.getElementById("com"+(counterCom));
                 naeo2.value =current[i].opentime;  
                 naeo1.value = current[i].image;
                 // Append a line break 
-                form.appendChild(document.createElement("br"));
+                container.appendChild(document.createElement("br"));
                 counterCom++;
                
-            }   
-           
-          
+            }

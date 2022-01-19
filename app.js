@@ -16,7 +16,7 @@ var bodyParser = require('body-parser')
 var user;
 var countUsers = 1;
 var screen1State = " ", screen2State = " ", screen3State = " ";
-var flag = 0;
+var flag = 0, flag2 = 0;
 var username;
 var password;
 var myId, myName, opentime, image;
@@ -106,15 +106,23 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     console.log("adminPassword: " + password);
 
     flag = temp.length;
-    var num, num2;
+    var num, num2, num3;
     //console.log("temp: " + temp);
   for (var i =0; i<temp.length; i++)
   {
     var comVar = "com";
+    var comDel = "delete";
     num = sReq.body[comVar +i];
     num2 = sReq.body[comVar +flag];
-
+    num3 = sReq.body[comDel + i];
     changeCom(temp[i]._id, num2, num);
+    if (num3)
+    {
+      deleteCom(temp[i]._id);
+      db.collection(databasecomm).find().toArray((error, tasks) => {
+        temp = tasks
+      })
+    }
     flag++;
   }
 
@@ -123,6 +131,18 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     addCom(sReq.body.myId ,sReq.body.myName ,sReq.body.opentime, sReq.body.image);
   });
 
+
+  function deleteCom(id){
+
+  db.collection(databasecomm).deleteOne({
+    _id: id
+  }).then((result) => {
+    console.log(result)
+  }).catch((error) => {
+    console.log(error)
+    
+  })
+}
 
   function changeAdmin(id, name, pass) {
     console.log(id + name + pass);
@@ -165,14 +185,8 @@ function changeCom(id, img, openT) {
 
 
   app.post('/submit',function (sReq, sRes){
-       
-
-
-      console.log("hi");
 
   });
-
-
 
   app.post('/login', function (sReq, sRes) {
     username = sReq.body.username;

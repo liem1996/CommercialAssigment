@@ -35,8 +35,6 @@ var temp = [];
 let screen = 0;
 var admin = [];
 
-
-var idArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
 
   if (error) {
@@ -96,18 +94,18 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   app.post("/editcoom", function (sReq, sRes) {
 
-    db.collection(databasecomm).find().toArray((error, tasks) => {
-      temp = tasks
-    })
-
     username = sReq.body.adminName;
     password = sReq.body.adminPassword;
     console.log("adminName: " + username);
     console.log("adminPassword: " + password);
 
     flag = temp.length;
-    var num, num2, num3;
-    //console.log("temp: " + temp);
+    var num, num2, num3, var1, var2, var3, var4;
+    var1=sReq.body.myId;
+    var2=sReq.body.myName;
+    var3=sReq.body.opentime;
+    var4=sReq.body.image;
+  
   for (var i =0; i<temp.length; i++)
   {
     var comVar = "com";
@@ -115,7 +113,17 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     num = sReq.body[comVar +i];
     num2 = sReq.body[comVar +flag];
     num3 = sReq.body[comDel + i];
+  
     changeCom(temp[i]._id, num2, num);
+    if (var1 != ""&&var2!=""&&var3!=""&&var4!="")
+    {
+     addCom(var1,var2,var3,var4);
+     var1="";
+     var2="";
+     var3="";
+     var4="";
+    }
+    
     if (num3)
     {
       deleteCom(temp[i]._id);
@@ -128,8 +136,15 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     changeAdmin(admin[0]._id, username, password);
 
-    addCom(sReq.body.myId ,sReq.body.myName ,sReq.body.opentime, sReq.body.image);
-  });
+    db.collection(databasecomm).find().toArray((error, tasks) => {
+      temp = tasks
+    })
+    sRes.render('admin', {
+      screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
+      screen2: screen3State, adminName: username, adminPassword: password,
+    });
+
+    });
 
 
   function deleteCom(id){
@@ -170,6 +185,9 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
        },
       ]
     )
+    db.collection(databasecomm).find().toArray((error, tasks) => {
+      temp = tasks
+    })
   }
 
 function changeCom(id, img, openT) {
@@ -181,6 +199,7 @@ function changeCom(id, img, openT) {
           opentime: openT, image: img
         }
       });
+
     }
 
 
@@ -196,9 +215,8 @@ function changeCom(id, img, openT) {
       // do something here with a valid login
 
       sRes.render('admin', {
-        screen: temp, usersconnect: countUsers, screen1: screen1State, screen2: screen2State,
-        screen3: screen3State, adminName: username, adminPassword: password,
-        myId1:myId, myName1:myName, opentime1:opentime, image1:image,
+        screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
+        screen2: screen3State, adminName: username, adminPassword: password,
       });
 
 

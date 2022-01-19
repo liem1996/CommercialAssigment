@@ -34,7 +34,8 @@ body
     script.
             
             var naeo1;
-            var naeo2;           
+            var naeo2;  
+            var naeo3;         
             var counter1=2;
            
             var currentuser = document.getElementById("comm").value;
@@ -47,28 +48,33 @@ body
            
             for (var i=0;i<current.length;i++){
                 // Append a node with a random text
+                var form = document.createElement("form");
+                form.setAttribute("method", "post");
+                form.setAttribute("action", "/submit");
                 console.log("the current length:" + current.length);
-                container.appendChild(document.createTextNode("com" + (i)));
-                container.appendChild(document.createTextNode("com" + (counterCom)));
                 // Create an <input> element, set its type and name attributes
                 var input = document.createElement("input");
                 var input2 = document.createElement("input");
-                console.log(input2);
                 input.type = "text";
                 input.name = "com"+ i;
                 input.setAttribute("id", "com" + (i))
                 input2.setAttribute("id", "com" + (counterCom))
-                console.log(input2);
                 input2.type = "text";
                 input2.name = "com"+ (counterCom);
-                container.appendChild(input);
-                container.appendChild(input2);
+                var s = document.createElement("input");
+                s.setAttribute("type", "submit");
+                s.setAttribute("value", "Delete");
+                form.appendChild(input);
+                form.appendChild(input2);
+               // form.appendChild(br.cloneNode());
+                form.appendChild(s);
+                container.appendChild(form);
                 naeo2=document.getElementById("com"+(i));
                 naeo1=document.getElementById("com"+(counterCom));
                 naeo2.value =current[i].opentime;  
                 naeo1.value = current[i].image;
                 // Append a line break 
-                container.appendChild(document.createElement("br"));
+                form.appendChild(document.createElement("br"));
                 counterCom++;
                
             }   

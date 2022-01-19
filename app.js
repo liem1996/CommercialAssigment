@@ -108,7 +108,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     flag = temp.length;
     var num, num2;
     //console.log("temp: " + temp);
-    for (var i =0; i<temp.length; i++)
+  for (var i =0; i<temp.length; i++)
   {
     var comVar = "com";
     num = sReq.body[comVar +i];
@@ -162,6 +162,16 @@ function changeCom(id, img, openT) {
         }
       });
     }
+
+
+  app.post('/submit',function (sReq, sRes){
+       
+
+
+      console.log("hi");
+
+  });
+
 
 
   app.post('/login', function (sReq, sRes) {

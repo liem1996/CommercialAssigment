@@ -1,35 +1,46 @@
 docotype  
 html 
     head 
+        style 
+            include ./adminStyle.css
         title CommercialsAdmin
+        
 body
-    h1 "Commercials"
+    h1 Admin page
     form(id ="form" action="/editcoom" method="post")
-        input(type = 'hidden', name="comm" id ="com" placeholder="" value=screen)
-        p Number of connected users:
-        input(name="userscount" id ="userscount" value=usersconnect disabled )
+        div.tabCard
+            div.card
+                div.card-content
+                    h3 Number of connected users:
+                    input(type = 'hidden', name="comm" id ="com" placeholder="" value=screen)
+                    input(name="userscount" id ="userscount" value=usersconnect disabled )
             
-        p Admin is connected
-        p Screen 0:
-        input(name="screen0" id ="screen0" value=screen0 disabled )    
-        p Screen 1:
-        input(name="screen1" id ="screen1" value=screen1 disabled ) 
-        p Screen 2:
-        input(name="screen2" id ="screen2" value=screen2 disabled )   
-        p Admin name:
-        input(name ="adminName" type="text" id="admin1" placeholder="" value=adminName)
-        p Admin password:
-        input(name ="adminPassword" type="text" id="admin2" placeholder="" value=adminPassword) 
-        p Add a commercial
-        input(name ="myId" type="text" id="myId" placeholder="Add id")
-        input(name ="myName" type="text" id="myName" placeholder="Add name")
-        input(name ="opentime" type="text" id="opentime"  placeholder="Add opentime")
-        input(name ="image" type="text" id="image" placeholder="Add image")       
-          
-        input(type='submit', value='Submit')
+                    p Admin is connected
+                    p Screen 0:
+                    input(name="screen0" id ="screen0" value=screen0 disabled )    
+                    p Screen 1:
+                    input(name="screen1" id ="screen1" value=screen1 disabled ) 
+                    p Screen 2:
+                    input(name="screen2" id ="screen2" value=screen2 disabled )  
+            div.card
+                div.card-content 
+                    h2 Admin settings
+                    p Admin name:
+                    input(name ="adminName" type="text" id="admin1" placeholder="" value=adminName)
+                    p Admin password:
+                    input(name ="adminPassword" type="text" id="admin2" placeholder="" value=adminPassword) 
+        div.commCard(id="divCard")
+            h2 Add a commercial
+            input(name ="myId" type="text" id="myId" placeholder="Add id")
+            input(name ="myName" type="text" id="myName" placeholder="Add name")
+            input(name ="opentime" type="text" id="opentime"  placeholder="Add opentime")
+            input(name ="image" type="text" id="image" placeholder="Add image")       
+            input(type='submit', value='Submit')
+            br
+            br
     
     script.
-            
+    
             var naeo1;
             var naeo2;           
             var counter1=2;
@@ -40,13 +51,19 @@ body
              var counterCom=current.length;
             // Container <div> where dynamic content will be placed
             var container = document.getElementById("form");
+            var containerCard = document.getElementById("divCard");
+
             // Clear previous contents of the container
 
             for (var i=0;i<current.length;i++){
                 // Append a node with a random text
-                
-                container.appendChild(document.createTextNode("com" + (i)));
-                container.appendChild(document.createTextNode("com" + (counterCom)));
+                var number = i;
+                containerCard.appendChild(document.createElement("br"));
+
+                containerCard.appendChild(document.createTextNode("commercial " + (number+1)+": "));
+                containerCard.appendChild(document.createElement("br"));
+                containerCard.appendChild(document.createElement("br"));
+
                 // Create an <input> element, set its type and name attributes
                 var input = document.createElement("input");
                 var input2 = document.createElement("input");
@@ -66,10 +83,14 @@ body
                 console.log(input2);
                 input2.type = "text";
                 input2.name = "com"+ (counterCom);
-                container.appendChild(input);
-                container.appendChild(input2);
-                container.appendChild(checkbox);
-                container.appendChild(label);
+                //- container.appendChild(input);
+                //- container.appendChild(input2);
+                //- container.appendChild(checkbox);
+                //- container.appendChild(label);
+                containerCard.appendChild(input);
+                containerCard.appendChild(input2);
+                containerCard.appendChild(checkbox);
+                containerCard.appendChild(label);
                 naeo2=document.getElementById("com"+(i));
                 naeo1=document.getElementById("com"+(counterCom));
                 console.log(current[i]);
@@ -78,7 +99,8 @@ body
                 naeo2.value =current[i].opentime;  
                 naeo1.value = current[i].image;
                 // Append a line break 
-                container.appendChild(document.createElement("br"));
+                containerCard.appendChild(document.createElement("br"));
                 counterCom++;
+
                
             }

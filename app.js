@@ -6,7 +6,7 @@ var port = 8082;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'Commercials13'
+const databaseName = 'AllCommercials'
 const databasecomm = 'commercialsAdds'
 const databasecommUsers = 'commercialsUsers'
 const databaseAdmin = 'commercialsAdmin'
@@ -88,7 +88,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
 
   app.get('/admin', function (req, res) {
-    res.sendFile(path.join(__dirname + '/index5.html'));
+    res.sendFile(path.join(__dirname + '/login.html'));
 
   });
 
@@ -238,7 +238,8 @@ function changeCom(id, img, openT,index) {
 
     } else {
       // user or password doesn't match
-      sRes.json("Wrong details, please go back to the firsg page!");
+      sRes.sendFile(path.join(__dirname + '/views/404page.html'));
+      //sRes.json("Wrong details, please go back to the firsg page!");
     }
   });
 

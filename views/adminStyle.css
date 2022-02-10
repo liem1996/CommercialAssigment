@@ -1,0 +1,51 @@
+
+h1{
+    margin-top: 3%;
+    color: #43a9bd;
+    font-family: 'Prompt', sans-serif;
+    text-align: center;
+    font-size: 3em;
+}
+.card{
+    background-color: #ade8f4;
+    text-align: center;
+    border: 3px solid black;
+    border-radius: 10px;
+    width: 20%;
+    margin: 23px 20px;
+    height: 370px;
+    font-family: Arial, Helvetica, sans-serif;    
+}
+.tabCard{
+    display: flex;
+    flex-direction: row;
+    margin-left: 550px;
+}
+
+.commCard{
+    background-color: #51b4c8;
+    text-align: center;
+    border: 3px solid black;
+    border-radius: 10px;
+    width: 75%;
+    margin: 23px 20px;
+    height: 1300px;
+    font-family: Arial, Helvetica, sans-serif; 
+    float: left;
+    font-size: larger;
+    font-weight: bold;
+
+    font-family: 'Inconsolata', monospace;
+    margin-left: 220px;
+}
+.card h2{
+    text-align: center;
+    margin: 0 12px;
+    margin-top: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.commCard h2{
+    font-family: Arial, Helvetica, sans-serif;
+  
+}

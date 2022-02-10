@@ -3,7 +3,7 @@ var app = express();
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
-const databaseName = 'Commercials13'
+const databaseName = 'AllCommercials'
 
 const path = require('path');
 const { getMaxListeners } = require("process");
@@ -111,7 +111,7 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
    db.collection('commercialsAdmin').insertMany(
     [
      {
-      username:"amitbasat2212@gmail.com",
+      username:"admin@gmail.com",
       password:12345678
 
      },

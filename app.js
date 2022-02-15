@@ -113,7 +113,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     var comDel = "delete";
     num = sReq.body[comVar +i];
     num2 = sReq.body[comVar +flag];
-    num3 = sReq.body[comDel + i];
+    num3 = Boolean(sReq.body[comDel + i]);
   
     changeCom(temp[i]._id, num2, num,i);
     if (var1!= "" && var2!=""&&var3!=""&&var4!="")
@@ -129,14 +129,18 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     }
     
     
-   
-    if (num3)
+    if (num3==true)
     {
       deleteCom(temp[i]._id);
       db.collection(databasecomm).find().toArray((error, tasks) => {
         temp = tasks
-      })
+      });
+      sReq.body[comDel + i]=false;
+      num3=false;
+      
+      
     }
+
     flag++;
   }
 
@@ -149,10 +153,20 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
    
     setTimeout(() => {
-      sRes.render('admin', {
-        screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
-        screen2: screen3State, adminName: username, adminPassword: password,
-      });
+    
+      
+      /*
+        sRes.render('admin', {
+          screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
+          screen2: screen3State, adminName: username, adminPassword: password,
+          
+        });
+        */
+
+        sRes.redirect(307, '/refresh');
+       
+       
+          
     }, 2000);
    
 
@@ -219,6 +233,14 @@ function changeCom(id, img, openT,index) {
       
 
   }
+
+
+    app.post('/refresh',function(req,res){
+      res.render('admin', {
+        screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
+        screen2: screen3State, adminName: username, adminPassword: password,
+      });
+    });
 
 
 

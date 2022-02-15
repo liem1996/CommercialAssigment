@@ -90,11 +90,9 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   app.get('/admin', function (req, res) {
     res.sendFile(path.join(__dirname + '/login.html'));
-
   });
 
 
-  
 
   app.post("/editcoom", function (sReq, sRes) {
 
@@ -131,8 +129,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     }
     
     
-    var list =[]
-
+   
     if (num3)
     {
       deleteCom(temp[i]._id);
@@ -143,7 +140,6 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     flag++;
   }
 
-  console.log(temp);
 
     changeAdmin(admin[0]._id, username, password);
     
@@ -151,8 +147,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
       temp = tasks
     })
 
-
-    
+   
     setTimeout(() => {
       sRes.render('admin', {
         screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
@@ -226,19 +221,11 @@ function changeCom(id, img, openT,index) {
   }
 
 
-  app.post('/submit',function (sReq, sRes){
-
-  });
 
   app.post('/login', function (sReq, sRes) {
     username = sReq.body.username;
     password = sReq.body.password;
-    
-
-    console.log(username);
-    console.log(password);
-    console.log(user.username);
-    console.log(user.password);
+  
 
     if (username == user.username && password == user.password) {
       // do something here with a valid login
@@ -256,9 +243,6 @@ function changeCom(id, img, openT,index) {
       //sRes.json("Wrong details, please go back to the firsg page!");
     }
   });
-
-
-
 
   http.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);

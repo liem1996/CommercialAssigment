@@ -1,8 +1,6 @@
 var express = require("express");
-const req = require("express/lib/request");
-const res = require("express/lib/response");
 var app = express();
-var port = 8089;
+var port = 8082;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -16,11 +14,10 @@ var bodyParser = require('body-parser')
 var user;
 var countUsers = 1;
 var screen1State = " ", screen2State = " ", screen3State = " ";
-var flag = 0, flag2 = 0;
+var flag = 0;
 var username;
 var password;
-const ObjectID = require('mongodb').ObjectID;
-var myId, myName, opentime, image;
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
@@ -29,13 +26,13 @@ const path = require('path');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use("/script", express.static('./script/'));
+
 let db = 0;
-
-var temp = [];
-var temp2 = [];
+var commercialsList = [];
+var usersList = [];
 let screen = 0;
-var admin = [];
 
+// Mongo DB connection
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
 
   if (error) {
@@ -44,29 +41,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   db = client.db(databaseName);
 
   db.collection(databasecomm).find().toArray((error, tasks) => {
-    temp = tasks
-  })
-
-  db.collection(databaseAdmin).find().toArray((error, tasks) => {
-    admin = tasks
-  })
-
-  db.collection(databasecommUsers).findOne({
-    Screen: 1
-  }, (error, task) => {
-    screen1 = task;
-  })
-
-  db.collection(databasecommUsers).findOne({
-    Screen: 2
-  }, (error, task2) => {
-    screen2 = task2;
-  })
-
-  db.collection(databasecommUsers).findOne({
-    Screen: 3
-  }, (error, task3) => {
-    screen3 = task3;
+    commercialsList = tasks
   })
 
   db.collection("commercialsAdmin").findOne({
@@ -75,47 +50,46 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   })
 
 
+  // using render in order to get into the index.pug according to the screen
+  // by that, sending the commercials to the right screen
   app.get('/screen=:screen', (req, res) => {
     screen = req.params.screen;
     res.render('index', {
-      screen: temp,
-
+      screen: commercialsList,
     });
     conectNotconect(screen);
-
-
   });
 
 
-
+  // navigating to the login.html screen after entering the admin page
   app.get('/admin', function (req, res) {
     res.sendFile(path.join(__dirname + '/login.html'));
   });
 
-
-
+  // the post method from the admin.pug main form - main checks
+  // the screen for editing the mongo DB
   app.post("/editcoom", function (sReq, sRes) {
 
     username = sReq.body.adminName;
     password = sReq.body.adminPassword;
-   
 
-    flag = temp.length;
-    var num, num2, num3, var1, var2, var3, var4;
+    flag = commercialsList.length;
+    var num, num2, deleteFlag, var1, var2, var3, var4;
     var1=sReq.body.myId;
     var2=sReq.body.myName;
     var3=sReq.body.opentime;
     var4=sReq.body.image;
-  
-  for (var i =0; i<temp.length; i++)
+  // to run on the commercials array and run fucntions of edit, delete etc
+  for (var i =0; i<commercialsList.length; i++)
   {
     var comVar = "com";
     var comDel = "delete";
     num = sReq.body[comVar +i];
     num2 = sReq.body[comVar +flag];
-    num3 = sReq.body[comDel + i];
+    deleteFlag = sReq.body[comDel + i];
   
-    changeCom(temp[i]._id, num2, num,i);
+    changeCom(commercialsList[i]._id, num2, num,i);
+
     if (var1!= "" && var2!=""&&var3!=""&&var4!="")
     {
      addCom(var1,var2,var3,var4);
@@ -124,33 +98,33 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
      var3="";
      var4="";
      db.collection(databasecomm).find().toArray((error, tasks) => {
-      temp = tasks
+      commercialsList = tasks
       })
     }
-    
-    
-   
-    if (num3)
+  
+    // check if the value of the checkbox in the admin.pug of the specific commercial
+    // is marked as true of false 
+    if (deleteFlag)
     {
-      deleteCom(temp[i]._id);
+      deleteCom(commercialsList[i]._id);
       db.collection(databasecomm).find().toArray((error, tasks) => {
-        temp = tasks
+        commercialsList = tasks
       })
     }
     flag++;
-  }
+  } // end of for loops
 
 
-    changeAdmin(admin[0]._id, username, password);
+    changeAdmin(user._id, username, password);
     
     db.collection(databasecomm).find().toArray((error, tasks) => {
-      temp = tasks
+      commercialsList = tasks
     })
 
-   
+   // refreshing the page in order to create a delay of 2 sec for the mongo to be save
     setTimeout(() => {
       sRes.render('admin', {
-        screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
+        screen: commercialsList, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
         screen2: screen3State, adminName: username, adminPassword: password,
       });
     }, 2000);
@@ -171,6 +145,8 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   })
 }
 
+// if the admin is being change, the function update the mongo and
+// use timeout to create a delay when qurey from the mongo
   function changeAdmin(id, name, pass) {
     db.collection(databaseAdmin).updateMany({ _id: mongodb.ObjectID(id) },
       {
@@ -179,19 +155,15 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
         }
       });
 
-    
    setTimeout(() => {
     db.collection("commercialsAdmin").findOne({
     }, (error, task) => {
       user = task;
     });
    }, 2000);
-   
-  
   }
 
   function addCom(id,name,openT,img){
-      
     db.collection(databasecomm).insertMany(
       [
        {
@@ -201,9 +173,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
          image:img
        },
       ]
-    )
-
-       
+    )  
   }
 
 function changeCom(id, img, openT,index) {
@@ -216,26 +186,21 @@ function changeCom(id, img, openT,index) {
         
       }
       );
-      
-
   }
 
-
-
+  // the login post function that check the connection of the user and navigate 
+  // to the next screen -> if connected than rendring, else go to 404 page
   app.post('/login', function (sReq, sRes) {
     username = sReq.body.username;
     password = sReq.body.password;
   
-
     if (username == user.username && password == user.password) {
       // do something here with a valid login
 
       sRes.render('admin', {
-        screen: temp, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
+        screen: commercialsList, usersconnect: countUsers, screen0: screen1State, screen1: screen2State,
         screen2: screen3State, adminName: username, adminPassword: password,
       });
-
-
 
     } else {
       // user or password doesn't match
@@ -250,9 +215,10 @@ function changeCom(id, img, openT,index) {
   });
 
   db.collection(databasecommUsers).find().toArray((error, tasks) => {
-    temp2 = tasks
+    usersList = tasks
   })
 
+  // function that checks by the each screen who is connected and who isnt
   function conectNotconect(screen1){
     io.once('connection', function (socket) {
       countUsers++;
@@ -296,11 +262,12 @@ function changeCom(id, img, openT,index) {
     });
   }
   
- 
+
+  // function that update the current state of user in the db
   function UserConnect(num, b) {
     db.collection(databasecommUsers).updateMany(
       { 
-        _id: mongodb.ObjectID(temp2[num]._id)
+        _id: mongodb.ObjectID(usersList[num]._id)
        },
     {
       $set: {

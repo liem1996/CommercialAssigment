@@ -66,7 +66,9 @@ body
                 // Create an <input> element, set its type and name attributes
                 var input = document.createElement("input");
                 var input2 = document.createElement("input");
+                var img = document.createElement('img');
                 var checkbox = document.createElement('input');
+                
                 console.log(input2);
                 input.type = "text";
                 input.name = "com"+ i;
@@ -80,7 +82,11 @@ body
                 input.setAttribute("id", "com" + (i))
                 input2.setAttribute("id", "com" + (counterCom))
                 input2.type = "text";
-                input2.name = "com"+ (counterCom);  
+                input2.name = "com"+ (counterCom);
+                containerCard.appendChild(document.createElement("br")); 
+                containerCard.appendChild(img); 
+                containerCard.appendChild(document.createElement("br"));
+                containerCard.appendChild(document.createElement("br"));
                 containerCard.appendChild(input);
                 containerCard.appendChild(input2);
                 containerCard.appendChild(checkbox);
@@ -89,6 +95,9 @@ body
                 naeo1=document.getElementById("com"+(counterCom));
                 naeo2.value =current[i].opentime;  
                 naeo1.value = current[i].image;
+                img.src=current[i].image;
+                img.style["width"]="100px";
+                img.style["height"]="100px";
                 // Append a line break 
                 containerCard.appendChild(document.createElement("br"));
                 counterCom++;

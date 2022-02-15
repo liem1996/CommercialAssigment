@@ -54,7 +54,6 @@ body
             var containerCard = document.getElementById("divCard");
 
             // Clear previous contents of the container
-
             for (var i=0;i<current.length;i++){
                 // Append a node with a random text
                 var number = i;
@@ -96,8 +95,11 @@ body
                 naeo2.value =current[i].opentime;  
                 naeo1.value = current[i].image;
                 img.src=current[i].image;
-                img.style["width"]="100px";
-                img.style["height"]="100px";
+                img.style["width"]="150px";
+                img.style["height"]="150px";
+                img.style["border"]="1px solid #ddd";
+                img.style["border-radius"]="4px";
+                img.style["padding"]="5px";
                 // Append a line break 
                 containerCard.appendChild(document.createElement("br"));
                 counterCom++;

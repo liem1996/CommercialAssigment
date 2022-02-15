@@ -1,0 +1,6 @@
+First, run the file:
+CommercialsMongoDB.js
+in order to create the DB collections
+and than, run the file:
+app.js
+in order to connect to the server

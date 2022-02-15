@@ -32,6 +32,7 @@ app.use("/script", express.static('./script/'));
 let db = 0;
 
 var temp = [];
+var temp2 = [];
 let screen = 0;
 var admin = [];
 
@@ -81,6 +82,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
       screen: temp,
 
     });
+    conectNotconect(screen);
 
 
   });
@@ -251,56 +253,65 @@ function changeCom(id, img, openT,index) {
 
   });
 
+  db.collection(databasecommUsers).find().toArray((error, tasks) => {
+    temp2 = tasks
+  })
 
-
-  io.on('connection', function (socket) {
-    countUsers++;
-    console.log("a user has connected!");
-    if (screen == 0) {
-      UserConnect(0, true);
-      screen1State = "Screen 0 is connected"
-    }
-
-    if (screen == 1) {
-      UserConnect(1, true);
-      screen2State = "Screen 1 is connected"
-    }
-    if (screen == 2) {
-      UserConnect(2, true);
-      screen3State = "Screen 2 is connected"
-
-    }
-
-    socket.on('disconnect', function () {
-      if (countUsers != 0) {
-        countUsers--;
+  function conectNotconect(screen1){
+    io.once('connection', function (socket) {
+      countUsers++;
+      console.log("a user has connected!");
+      if (screen1 == 0) {
+        UserConnect(0, true);
+        screen1State = "Screen 0 is connected"
       }
-      if (screen == 0) {
-        UserConnect(0, false);
-        screen1State = "Screen 0 is disconnected"
+  
+      if (screen1 == 1) {
+        UserConnect(1, true);
+        screen2State = "Screen 1 is connected"
       }
-      if (screen == 1) {
-        UserConnect(1, false);
-        screen2State = "Screen 1 is disconnected"
-
+      if (screen1 == 2) {
+        UserConnect(2, true);
+        screen3State = "Screen 2 is connected"
+  
       }
-      if (screen == 2) {
-        UserConnect(2, false);
-        screen3State = "Screen 2 is disconnected"
-
-      }
-
-      console.log("user disconnected");
+  
+      socket.once('disconnect', function () {
+        if (countUsers != 0) {
+          countUsers--;
+        }
+        if (screen1 == 0) {
+          UserConnect(0, false);
+          screen1State = "Screen 0 is disconnected"
+        }
+        if (screen1 == 1) {
+          UserConnect(1, false);
+          screen2State = "Screen 1 is disconnected"
+  
+        }
+        if (screen1 == 2) {
+          UserConnect(2, false);
+          screen3State = "Screen 2 is disconnected"
+  
+        }
+  
+        console.log("user disconnected");
+      });
     });
-  });
-
+  }
+  
+ 
+  function UserConnect(num, b) {
+    db.collection(databasecommUsers).updateMany(
+      { 
+        _id: mongodb.ObjectID(temp2[num]._id)
+       },
+    {
+      $set: {
+        isConnected: b
+      }
+    });
+  
+  }
 
 });
-
-
-function UserConnect(num, b) {
-  var myquery = { Screen: num };
-  var newvalues = { $set: { isConnected: b } };
-  db.collection(databasecommUsers).updateOne(myquery, newvalues, function (err, res) {
-  });
-}

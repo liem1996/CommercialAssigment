@@ -2,7 +2,7 @@ var express = require("express");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 var app = express();
-var port = 8082;
+var port = 8089;
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 const connectionURL = 'mongodb://127.0.0.1:27017/'
@@ -70,7 +70,6 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   })
 
   db.collection("commercialsAdmin").findOne({
-
   }, (error, task) => {
     user = task;
   })
@@ -178,15 +177,22 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 }
 
   function changeAdmin(id, name, pass) {
-   
-
     db.collection(databaseAdmin).updateMany({ _id: mongodb.ObjectID(id) },
       {
         $set: {
           username: name, password: pass
         }
       });
-     
+
+    
+   setTimeout(() => {
+    db.collection("commercialsAdmin").findOne({
+    }, (error, task) => {
+      user = task;
+    });
+   }, 2000);
+   
+  
   }
 
   function addCom(id,name,openT,img){
@@ -227,6 +233,12 @@ function changeCom(id, img, openT,index) {
   app.post('/login', function (sReq, sRes) {
     username = sReq.body.username;
     password = sReq.body.password;
+    
+
+    console.log(username);
+    console.log(password);
+    console.log(user.username);
+    console.log(user.password);
 
     if (username == user.username && password == user.password) {
       // do something here with a valid login

@@ -25,16 +25,16 @@ body
             div.card
                 div.card-content 
                     h2 Admin settings
-                    p Admin name:
-                    input(name ="adminName" type="text" id="admin1" placeholder="" value=adminName required)
+                    p Admin email:
+                    input(name ="adminName" type="email" id="admin1" placeholder="" value=adminName required)
                     p Admin password:
                     input(name ="adminPassword" type="text" id="admin2" placeholder="" value=adminPassword required) 
         div.commCard(id="divCard")
             h2 Add a commercial
-            input(name ="myId" type="text" id="myId" placeholder="Add id" required)
-            input(name ="myName" type="text" id="myName" placeholder="Add name" required)
-            input(name ="opentime" type="text" id="opentime"  placeholder="Add opentime" required)
-            input(name ="image" type="text" id="image" placeholder="Add image" required)       
+            input(name ="myId" type="number" id="myId" placeholder="Add id" )
+            input(name ="myName" type="text" id="myName" placeholder="Add name" )
+            input(name ="opentime" type="number" id="opentime"  placeholder="Add opentime" )
+            input(name ="image" type="text" id="image" placeholder="Add image" )       
             input(type='submit', value='Submit')
             br
             br
@@ -69,7 +69,7 @@ body
                 var checkbox = document.createElement('input');
                 
                 console.log(input2);
-                input.type = "text";
+                input.type = "number";
                 input.name = "com"+ i;
                 checkbox.type = "checkbox";
                 checkbox.id = "delete" + i ;
@@ -86,8 +86,8 @@ body
                 containerCard.appendChild(img); 
                 containerCard.appendChild(document.createElement("br"));
                 containerCard.appendChild(document.createElement("br"));
-                containerCard.appendChild(input);
-                containerCard.appendChild(input2);
+                containerCard.appendChild(input).required = true;;
+                containerCard.appendChild(input2).required = true;;
                 containerCard.appendChild(checkbox);
                 containerCard.appendChild(label);
                 naeo2=document.getElementById("com"+(i));

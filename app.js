@@ -249,9 +249,9 @@ function changeCom(id, img, openT,index) {
       }
   
       socket.once('disconnect', function () {
-        if (countUsers != 0) {
+       
           countUsers--;
-        }
+        
         if (screen1 == 0) {
           UserConnect(0, false);
           screen1State = "Screen 0 is disconnected"

@@ -26,15 +26,15 @@ body
                 div.card-content 
                     h2 Admin settings
                     p Admin name:
-                    input(name ="adminName" type="text" id="admin1" placeholder="" value=adminName)
+                    input(name ="adminName" type="text" id="admin1" placeholder="" value=adminName required)
                     p Admin password:
-                    input(name ="adminPassword" type="text" id="admin2" placeholder="" value=adminPassword) 
+                    input(name ="adminPassword" type="text" id="admin2" placeholder="" value=adminPassword required) 
         div.commCard(id="divCard")
             h2 Add a commercial
-            input(name ="myId" type="text" id="myId" placeholder="Add id")
-            input(name ="myName" type="text" id="myName" placeholder="Add name")
-            input(name ="opentime" type="text" id="opentime"  placeholder="Add opentime")
-            input(name ="image" type="text" id="image" placeholder="Add image")       
+            input(name ="myId" type="text" id="myId" placeholder="Add id" required)
+            input(name ="myName" type="text" id="myName" placeholder="Add name" required)
+            input(name ="opentime" type="text" id="opentime"  placeholder="Add opentime" required)
+            input(name ="image" type="text" id="image" placeholder="Add image" required)       
             input(type='submit', value='Submit')
             br
             br

@@ -79,6 +79,9 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     var2=sReq.body.myName;
     var3=sReq.body.opentime;
     var4=sReq.body.image;
+    if(commercialsList.length==0){
+      addCom(var1,var2,var3,var4);
+     }  
   // to run on the commercials array and run fucntions of edit, delete etc
   for (var i =0; i<commercialsList.length; i++)
   {

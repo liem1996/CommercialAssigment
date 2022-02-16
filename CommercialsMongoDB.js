@@ -30,15 +30,15 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
         },
         {
           myId : 1,
-          myName: "Hugim",
+          myName: "Pizza",
           opentime: 3000,
-          image:"https://static.wixstatic.com/media/9aa509_4d6b69af038e47269d1e39735987c6ed~mv2.jpg/v1/fill/w_250,h_363,al_c,q_90/9aa509_4d6b69af038e47269d1e39735987c6ed~mv2.jpg"  
+          image:"https://i.ytimg.com/vi/qfSg78JALzg/maxresdefault.jpg"  
         },
         {
           myId : 2,
-          myName: "Medicine",
-          opentime: 6000,
-          image:"https://o.quizlet.com/DkJ6OEEA6nkfdZsb7CEOiw.jpg" 
+          myName: "Primor",
+          opentime: 3000,
+          image:"https://primor.co.il/wp-content/uploads/2016/12/picslider4.jpg" 
         },
       {
         myId : 3,
@@ -56,27 +56,27 @@ MongoClient.connect(connectionURL,{useNewUrlParser : true},(error,client) => {
       {
         myId : 5,
         myName: "Book",
-        opentime: 6000,
-        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw9BiZB7lUGFNWWdKsMAIBPULWCA-O6yNEIw&usqp=CAU"
+        opentime: 3000,
+        image:"https://i.ytimg.com/vi/-bQIIEhY7PY/maxresdefault.jpg"
 
       },
     {
       myId : 6,
-      myName: "Bezeq",
+      myName: "Disney",
       opentime: 2000,
-      image:"https://gidigov.co.il/wp-content/uploads/2016/03/bezeq-2.jpg"
+      image:"https://cdn.mos.cms.futurecdn.net/hZs2sf9VCzS3RCCQyn26bY-1200-80.jpg"
     },
     {
       myId : 7,
       myName: "Clalit",
       opentime: 3000,
-      image:"https://www.makorrishon.co.il/wp-content/uploads/2018/03/1_118491090.jpg"
+      image:"https://lessismore-ad.co.il/wp-content/uploads/2017/01/%D7%9B%D7%9C%D7%9C%D7%99%D7%AA-%D7%97%D7%95%D7%9C%D7%95%D7%9F-ribua.jpg"
 
     },
     {
       myId : 8,
       myName: "CafeElit",
-      opentime: 6000,
+      opentime: 3000,
       image:"https://www.shotim.co.il/wp-content/uploads/nostalgic-ad-elite-instant-coffee.jpg"
 
     },
